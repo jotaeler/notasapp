@@ -22,13 +22,7 @@ class CreateUsersTable extends AbstractMigration
                              'null' => false]);
 
         $table -> addColumn ('password','string',[
-                             'limit' => 50,
-                             'null' => false]);
-
-        $table -> addColumn ('created','datetime',[
-                             'null' => false]);
-
-        $table -> addColumn ('modified','datetime',[
+                             'limit' => 200,
                              'null' => false]);
 
         $table -> addColumn ('role','enum',[

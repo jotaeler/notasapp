@@ -28,14 +28,14 @@ class CreateDataMigrations extends AbstractMigration
                 $hasher = new DefaultPasswordHasher();
                 return $hasher -> hash('user');
             },
-            'role' => 'user',
-            'created' => function () use ($faker){
-                return $faker->dateTimeBetween($startDate = 'now', $endDate = 'now');
-            },
-            'modified' => function () use ($faker){
-                return $faker->dateTimeBetween($startDate = 'now', $endDate = 'now');
-            }
-            
+            'role' => 'user'
+            // 'created' => function () use ($faker){
+            //     return $faker->dateTimeBetween($startDate = 'now', $endDate = 'now');
+            // },
+            // 'modified' => function () use ($faker){
+            //     return $faker->dateTimeBetween($startDate = 'now', $endDate = 'now');
+            // }
+
         ]);
 
         $populator -> execute();
