@@ -44,12 +44,47 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Auth', [
+          'authorize' => ['Controller'],
+          'authenticate' => [
+            'Form' => [
+              'fields' => [
+                'username' => 'username',
+                'password' => 'password'
+              ]
+            ]
+          ],
+          'loginAction' => [
+            'controller' => 'Users',
+            'action' => 'login'
+          ],
+          'authError' => 'Error de autenticacion',
+          'loginRedirect' => [
+              'controller' => 'Notes',
+              'action' => 'index'
+          ],
+          'logoutRedirect' => [
+              'controller' => 'Users',
+              'action' => 'login',
+          ]
+        ]);
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+        $this->loadComponent('Security');
+        $this->loadComponent('Csrf');
+    }
+
+    /**
+     * tell the AuthComponent to not require a login for all index() and view() actions, in every controller.
+     * @param  Event  $event [description]
+     * @return [type]        [description]
+     */
+    public function beforeFilter(Event $event)
+    {
+        $this->Auth->allow(['index', 'view', 'display']);
     }
 
     /**
@@ -68,5 +103,9 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+    }
+
+    public function isAuthorized(User $user){
+      return true;
     }
 }
