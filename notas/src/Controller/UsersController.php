@@ -4,6 +4,11 @@ namespace App\Controller;
 class UsersController extends AppController
 {
 
+    public function beforeFilter(\Cake\Event\Event $event)
+    {
+         $this->Auth->allow(['logout','edit', 'view']);
+    }
+
     public function index()
     {
 
@@ -14,15 +19,6 @@ class UsersController extends AppController
         $user = $this->Users->get($id);
         $this->set(compact('user'));
     }
-
-    // public function beforeFilter(Event $event)
-    // {
-    //     parent::beforeFilter($event);
-    //     // Allow users to register and logout.
-    //     // You should not add the "login" action to allow list. Doing so would
-    //     // cause problems with normal functioning of AuthComponent.
-    //     $this->Auth->allow(['add', 'logout']);
-    // }
 
     public function login()
     {
@@ -40,6 +36,24 @@ class UsersController extends AppController
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function edit($id)
+    {
+        $user = $this->Users->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Los cambios se han guardado.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Los datos no se guardaron. Por favor, vuelve a intentarlo.'));
+            }
+        }
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
     }
 
 }

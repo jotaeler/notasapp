@@ -4,6 +4,11 @@ namespace App\Controller;
 class NotesController extends AppController
 {
 
+	public function initizalize() {
+    	parent::inintialize();
+    	$this->loadComponent('Flash');
+    }
+
     public function index()
     {
         $notes = $this->Notas->find('all');
