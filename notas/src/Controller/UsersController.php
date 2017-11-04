@@ -6,7 +6,7 @@ class UsersController extends AppController
 
     public function beforeFilter(\Cake\Event\Event $event)
     {
-         $this->Auth->allow(['logout','edit', 'view']);
+         $this->Auth->allow(['logout']);
     }
 
     public function index()

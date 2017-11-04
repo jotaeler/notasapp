@@ -61,7 +61,7 @@ class AppController extends Controller
           'authError' => 'Error de autenticacion',
           'loginRedirect' => [
               'controller' => 'Notes',
-              'action' => 'index'
+              'action' => 'view'
           ],
           'logoutRedirect' => [
               'controller' => 'Users',
