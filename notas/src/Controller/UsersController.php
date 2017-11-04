@@ -1,12 +1,14 @@
 <?php
 namespace App\Controller;
+use Cake\Log\Log;
 
 class UsersController extends AppController
 {
 
     public function beforeFilter(\Cake\Event\Event $event)
     {
-         $this->Auth->allow(['logout','edit', 'view']);
+         //$this->Auth->allow(['logout']);
+         $this->Auth->deny(['edit','view']);
     }
 
     public function index()
@@ -54,6 +56,16 @@ class UsersController extends AppController
         }
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
+    }
+
+    public function isAuthorized($user){
+      Log::write('debug',$user);
+      Log::write('debug',$this->Auth->user());
+      if(isset($user) && $user['id'] == $this->Auth->user()['id']){
+        return true;
+      }else{
+        return false;
+      }
     }
 
 }

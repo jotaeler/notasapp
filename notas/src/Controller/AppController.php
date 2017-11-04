@@ -16,7 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
-
+use App\Controller\User;
 /**
  * Application Controller
  *
@@ -66,7 +66,8 @@ class AppController extends Controller
           'logoutRedirect' => [
               'controller' => 'Users',
               'action' => 'login',
-          ]
+          ],
+          'unauthorizedRedirect' => $this->referer()
         ]);
 
         /*
@@ -105,7 +106,15 @@ class AppController extends Controller
         }
     }
 
-    public function isAuthorized(User $user){
-      return true;
+    public function isAuthorized($user)
+    {
+    // Admin can access every action
+    if (isset($user['role']) && $user['role'] === 'admin') {
+        return true;
     }
+
+    // Default deny
+    return false;
+  }
+
 }
