@@ -1,18 +1,24 @@
 <?php
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
+
 class NotesController extends AppController
 {
 
-	public function initizalize() {
+		public function initizalize() {
     	parent::inintialize();
     	$this->loadComponent('Flash');
     }
 
-    public function index()
+    public function view()
     {
-        $notes = $this->Notas->find('all');
-        $this->set(compact('notes')); //Esto envia la variable con las notas a la vista
+			$notes = TableRegistry::get('Notes')->find('all')->contain(['Users']);
+			foreach ($notes as $note) {
+				echo $note->users[0]->text;
+			}
+
+			$this->set(compact('notes'));
     }
 }
 
