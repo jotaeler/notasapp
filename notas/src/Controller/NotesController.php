@@ -17,9 +17,14 @@ class NotesController extends AppController
 
     public function view()
     {
+			$user = $this->Auth->user();
 			$notes = $this->Notes->find()->contain(['Users'])->where(['private !=' => true]);
-			echo $notes->count();
 			$this->set(compact('notes'));
+
+			if (isset($user)){
+				$username = $this->Auth->user('username');
+				$this->set(compact('username'));
+			}
     }
 }
 
