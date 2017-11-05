@@ -11,7 +11,7 @@ class NotesController extends AppController
 		}
 
 		public function initizalize() {
-    	parent::inintialize();
+    	parent::initialize();
     	$this->loadComponent('Flash');
     }
 
