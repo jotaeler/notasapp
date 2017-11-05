@@ -1,10 +1,14 @@
 <?php
 namespace App\Controller;
 
-use Cake\ORM\TableRegistry;
-
 class NotesController extends AppController
 {
+
+		public function beforeFilter(\Cake\Event\Event $event)
+		{
+				 $this->Auth->allow(['view']);
+				 //$this->Auth->allow(['logout']);
+		}
 
 		public function initizalize() {
     	parent::inintialize();
@@ -13,11 +17,8 @@ class NotesController extends AppController
 
     public function view()
     {
-			$notes = TableRegistry::get('Notes')->find('all')->contain(['Users']);
-			foreach ($notes as $note) {
-				echo $note->users[0]->text;
-			}
-
+			$notes = $this->Notes->find()->contain(['Users'])->where(['private !=' => true]);
+			echo $notes->count();
 			$this->set(compact('notes'));
     }
 }

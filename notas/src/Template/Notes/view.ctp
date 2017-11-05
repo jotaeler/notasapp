@@ -3,7 +3,8 @@
     <div class="large-5 columns strings">
         <h6 class="subheader"><?= __($note->title) ?></h6>
         <?= h($note->content) ?>
-        <?= h($note->username) ?>
+        <br></br>
+        <p> Autor: <?= h($note->user->name) ?></p> 
     </div>
   <?php } ?>
 </div>

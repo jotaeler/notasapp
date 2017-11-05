@@ -49,6 +49,7 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Los cambios se han guardado.'));
+                // CORREGIR RUTA DE REDIRECCIÓN //
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('Los datos no se guardaron. Por favor, vuelve a intentarlo.'));
