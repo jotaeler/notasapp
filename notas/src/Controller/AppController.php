@@ -106,15 +106,15 @@ class AppController extends Controller
         }
     }
 
+    /**
+     * Este es el método padre y hay que implementar el método en cada controlador
+     * para establecer las condiciones de autorización
+     * @param  [type]  $user [description]
+     * @return boolean       [description]
+     */
     public function isAuthorized($user)
     {
-    // Admin can access every action
-    if (isset($user['role']) && $user['role'] === 'admin') {
         return true;
     }
-
-    // Default deny
-    return false;
-  }
 
 }

@@ -8,7 +8,7 @@ class UsersController extends AppController
     public function beforeFilter(\Cake\Event\Event $event)
     {
          $this->Auth->deny(['edit','view']);
-         //$this->Auth->allow(['logout']);
+        $this->Auth->allow(['logout','login']);
     }
 
     public function index()
@@ -59,14 +59,24 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
+    /**
+     * Este método define las condiciones para que un usuario acceda al los métodos
+     * que no son públicos. En este caso el usuario debe ser él mismo para poder
+     * acceder a los métodos que son afectados por este metodo.
+     * @param  [type]  $user [description]
+     * @return boolean       [description]
+     */
     public function isAuthorized($user){
-      Log::write('debug',$user);
-      Log::write('debug',$this->Auth->user());
-      if(isset($user) && $user['id'] == $this->Auth->user()['id']){
-        return true;
+
+      // The owner of an article can edit and delete it
+      if (isset($user) && $user['id'] == $this->Auth->user()['id']) {
+          if ($user['id'] == (int)$this->request->getParam('pass.0')) {
+              return true;
+          }
       }else{
         return false;
       }
+
     }
 
 }
