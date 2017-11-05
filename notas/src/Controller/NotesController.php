@@ -17,23 +17,23 @@ class NotesController extends AppController
 
    	public function index()
     {
-		$user = $this->Auth->user();
-		$notes = $this->Notes->find()->contain(['Users'])->where(['private' => false]);
-		$this->set(compact('notes'));
+			$user = $this->Auth->user();
+			$notes = $this->Notes->find()->contain(['Users'])->where(['private' => false]);
+			$this->set(compact('notes'));
 
-		if (isset($user)){
-			$username = $this->Auth->user('username');
-			$this->set(compact('username'));
-		}
+			if (isset($user)){
+				$username = $this->Auth->user('username');
+				$this->set(compact('username'));
+			}
     }
 
 	public function owned()
-    {
+  {
 			$user = $this->Auth->user();
 			$notes = $this->Notes->find()->where(['user_id' => $user['id']]);
 			$this->set(compact('notes'));
 			$this->set(compact('user'));
-    }
+  }
 
 	public function view($id){
 			//TO-DO
@@ -66,21 +66,20 @@ class NotesController extends AppController
      * @return boolean       [description]
      */
     public function isAuthorized($user){
-
       // The owner of an article can edit and delete it
-      if (isset($user) && $user['id'] == $this->Auth->user()['id']) {
-		if($this->request->getParam('pass.0') != null){
+			if (isset($user) && $user['id'] == $this->Auth->user()['id']) {
+				if($this->request->getParam('pass.0') != null){
 			//Significa que estamos intentando acceder a una nota concreta, ya sea para verla, editarla o eliminarla
-			if($this->Notes->isOwnedBy($user['id'], (int)$this->request->getParam('pass.0'))){
-				return true;
-			}else{
-				return false;
-			}
-		}
-      return true;
-      }else{
-        return false;
-      }
+					if($this->Notes->isOwnedBy($user['id'], (int)$this->request->getParam('pass.0'))){
+						return true;
+					}else{
+						return false;
+					}
+				}
+	  			return true;
+	    	}else{
+	    		return false;
+	    	}
     }
 }
 
