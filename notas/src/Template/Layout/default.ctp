@@ -37,11 +37,27 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-3 medium-4 columns">
             <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
+                <!--h1><a href=""><?= $this->fetch('title') ?></a></h1-->
+                <h1><a href="/notas">Aplicación Notas</a></h1>
             </li>
         </ul>
         <div class="top-bar-section">
+            <ul>
+                <?php if (isset($username)){?>
+                    <li><a href="/notas/notes/owned">My Notes</a></li>
+                <?php } ?>
+            </ul>
             <ul class="right">
+                <?php if (isset($username)) {?>
+                    <li><p>Hi <?=$username?></p></li>
+                <?php } ?>
+                <?php if (isset($username)) {?>
+                    <li><a href="/notas/users/logout" class="button">Logout</a></li>
+                <?php } ?>
+                <?php if (!isset($username)) {?>
+                    <li><a href="/notas/users/logout" class="button">Login</a></li>
+                <?php } ?>
+                
                 <li><a target="_blank" href="https://book.cakephp.org/3.0/">Documentation</a></li>
                 <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
             </ul>

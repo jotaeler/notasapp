@@ -18,7 +18,7 @@ class NotesController extends AppController
    	public function index()
     {
 			$user = $this->Auth->user();
-			$notes = $this->Notes->find()->contain(['Users'])->where(['private' => false]);
+			$notes = $this->paginate($this->Notes->find()->contain(['Users'])->where(['private' => false]));
 			$this->set(compact('notes'));
 
 			if (isset($user)){
@@ -27,13 +27,17 @@ class NotesController extends AppController
 			}
     }
 
-	public function owned()
-  {
+	public function owned(){
+
 			$user = $this->Auth->user();
-			$notes = $this->Notes->find()->where(['user_id' => $user['id']]);
+			$notes = $this->paginate($this->Notes->find()->where(['user_id' => $user['id']]));
 			$this->set(compact('notes'));
 			$this->set(compact('user'));
-  }
+			if (isset($user)){
+				$username = $this->Auth->user('username');
+				$this->set(compact('username'));
+			}
+  	}
 
 	public function view($id){
 			//TO-DO

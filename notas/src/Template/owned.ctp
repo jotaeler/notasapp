@@ -1,29 +1,35 @@
-<!--
-<div class="users view large-10 medium-9 columns">
-  <?php foreach ($notes as $note) {?>
-    <div class="large-5 columns strings">
-        <h6 class="subheader"><?= __($note->title) ?></h6>
-        <?= h($note->content) ?>
-        <br></br>
-    </div>
-  <?php } ?>
-</div>
--->
-
 <?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Note[]|\Cake\Collection\CollectionInterface $notes
  */
 ?>
+<!--nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('New Note'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+    </ul>
+</nav-->
+
+<!--
+<?php if (isset($username)) {?>
+    <a href="/notas/users/logout" class="button">Logout</a>
+<?php } ?>
+
+<?php if (!isset($username)) {?>
+    <a href="/notas/users/login" class="button">Login</a>
+<?php } ?>
+-->
 <div class="notes index large-9 medium-8 columns content">
-    <h3>My Notes</h3>
+    <h3><?= __('Notes') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('content') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('private') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -32,7 +38,7 @@
             <tr>
                 <td><?= h($note->title) ?></td>
                 <td><?= h($note->content) ?></td>
-                <td><?= h($note->private) ?></td>
+                <td><?= $note->has('user') ? $this->Html->link($note->user->username, ['controller' => 'Users', 'action' => 'view', $note->user->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $note->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $note->id]) ?>
