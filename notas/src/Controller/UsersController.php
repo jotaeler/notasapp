@@ -31,7 +31,7 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }else{
-                $this->Flash->error('Datos incorrectos', ['key' => 'auth']);
+                $this->Flash->error('Incorrect username or password', ['key' => 'auth']);
             }
         }
     }
@@ -49,9 +49,9 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success('Data saved');
                 // CORREGIR RUTA DE REDIRECCIÓN //
-                return $this->redirect(['action' => 'view']);
+                return $this->redirect(['controller' => 'Notes', 'action' => 'index']);
             } else {
-                $this->Flash->error(__('Something was worng'));
+                $this->Flash->error(__('Something was wrong'));
             }
         }
         $this->set(compact('user'));
@@ -65,15 +65,13 @@ class UsersController extends AppController
      * @param  [type]  $user [description]
      * @return boolean       [description]
      */
-    public function isAuthorized($user){
-
+     public function isAuthorized($user){
       // The owner of an article can edit and delete it
       if (isset($user) && $user['id'] == $this->Auth->user()['id']) {
           return true;
       }else{
         return false;
       }
-
     }
 
 }
