@@ -51,7 +51,7 @@ $cakeDescription = 'AppNotes';
             </ul>
             <ul class="right">
                 <?php if (isset($current_user)) {?>
-                    <li><p>Hi <?=$current_user['username']?></p></li>
+                    <li><p>Hi, <?=$current_user['name']?></p></li>
                 <?php } ?>
                 <?php if (isset($current_user)) {?>
                     <li><a href="/notas/users/edit" class="button">User configuration</a></li>

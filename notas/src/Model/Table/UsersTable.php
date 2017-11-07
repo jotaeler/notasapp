@@ -27,15 +27,9 @@ class UsersTable extends Table
     // In a table or behavior class
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
-        if (isset($data['username'])) {
-            $data['username'] = mb_strtolower($data['username']);
-        }
         if (isset($data['password'])) {
             $hasher = new DefaultPasswordHasher();
             $data['password'] = $hasher->hash($data['password']);
-        }
-        if (isset($data['name'])) {
-            $data['name'] = mb_strtolower($data['name']);
         }
     }
     /**

@@ -48,10 +48,9 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success('Data saved');
-                // CORREGIR RUTA DE REDIRECCIÓN //
                 return $this->redirect(['controller' => 'Notes', 'action' => 'index']);
             } else {
-                $this->Flash->error(__('Something was wrong'));
+                $this->Flash->error(__('Error while saving the data'));
             }
         }
         $this->set(compact('user'));
