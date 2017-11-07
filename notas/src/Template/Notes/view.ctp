@@ -18,35 +18,31 @@
 </nav>
 -->
 <div class="notes view large-9 medium-8 columns content">
-    <h3>New Note</h3>
+    <h3>Note detail</h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Title') ?></th>
+            <th scope="row">Title</th>
             <td><?= h($note->title) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('User') ?></th>
-            <td><?= $note->has('user') ? $this->Html->link($note->user->name, ['controller' => 'Users', 'action' => 'view', $note->user->id]) : '' ?></td>
+            <th scope="row">User</th>
+            <td><?= $note->user->username ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($note->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
+            <th scope="row">Created</th>
             <td><?= h($note->created) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Modified') ?></th>
+            <th scope="row">Modified</th>
             <td><?= h($note->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Private') ?></th>
-            <td><?= $note->private ? __('Yes') : __('No'); ?></td>
+            <th scope="row">Private</th>
+            <td><?= $note->private ? '<i class="fa fa-lock" aria-hidden="true"></i>' : '<i class="fa fa-unlock" aria-hidden="true"></i>' ?></td>
         </tr>
     </table>
     <div class="row">
-        <h4><?= __('Content') ?></h4>
+        <h4>Content</h4>
         <?= $this->Text->autoParagraph(h($note->content)); ?>
     </div>
 </div>

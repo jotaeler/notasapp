@@ -15,14 +15,17 @@
 <div class="notes form large-9 medium-8 columns content">
     <?= $this->Form->create($note) ?>
     <fieldset>
-        <legend><?= __('Add Note') ?></legend>
+        <legend>Add Note</legend>
         <?php
-            echo $this->Form->control('title');
-            echo $this->Form->control('content');
-            echo $this->Form->control('private', [options => ]);
-            echo $this->Form->control('user_id', ['options' => ['privada '=> "0" , 'pública' => '1']);
+            echo $this->Form->input('title',['class'=> '', 'placeholder' => 'Type the tittle of the note','required']);
+            echo $this->Form->textarea('content', ['class'=> '', 'placeholder' => 'Some text...','required']);
+            //echo $this->Form->control('private', [options => ]);
+            echo $this->Form->radio('private', [
+                ['value'=> '0' , 'text' => 'Public'],
+                ['value'=> '1' , 'text' => 'Private']
+            ], ['required']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button('Submit') ?>
     <?= $this->Form->end() ?>
 </div>

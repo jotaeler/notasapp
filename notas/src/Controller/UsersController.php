@@ -9,6 +9,7 @@ class UsersController extends AppController
     {
         $this->Auth->deny(['edit','view']);
         $this->Auth->allow(['logout','login']);
+        $this->set('current_user', $this->Auth->user());
     }
 
     public function index()

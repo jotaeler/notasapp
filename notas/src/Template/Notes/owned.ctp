@@ -24,7 +24,7 @@
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('content') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('private') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="col" class="actions">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -32,11 +32,10 @@
             <tr>
                 <td><?= h($note->title) ?></td>
                 <td><?= h($note->content) ?></td>
-                <td><?= h($note->private) ?></td>
+                <td><?= $note->private ? '<i class="fa fa-lock" aria-hidden="true"></i>' : '<i class="fa fa-unlock" aria-hidden="true"></i>' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $note->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $note->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $note->id], ['confirm' => __('Are you sure you want to delete # {0}?', $note->id)]) ?>
+                    <?= $this->Html->link('View <i class="fa fa-eye" aria-hidden="true"></i>', ['action' => 'view', $note->id], ['escape' => false]) ?>
+                    <?= $this->Form->postLink('Delete <i class="fa fa-times" aria-hidden="true"></i>', ['action' => 'del', $note->id], ['confirm' => __('Are you sure you want to delete # {0}?', $note->id), 'escape' => false]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

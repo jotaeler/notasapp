@@ -23,15 +23,14 @@
 <?php } ?>
 -->
 <div class="notes index large-9 medium-8 columns content">
-    <h3>Public Notes</h3>
+    <h3>Public Notes <i class="fa fa-unlock" aria-hidden="true"></i></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('content') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('private') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="col" class="actions">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -39,12 +38,9 @@
             <tr>
                 <td><?= h($note->title) ?></td>
                 <td><?= h($note->content) ?></td>
-                <td><?= h($note->private)?></td>
-                <td><?= $note->has('user') ? $this->Html->link($note->user->username, ['controller' => 'Users', 'action' => 'view', $note->user->id]) : '' ?></td>
+                <td><?= h($note->user->username) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $note->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $note->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $note->id], ['confirm' => __('Are you sure you want to delete # {0}?', $note->id)]) ?>
+                    <?= $this->Html->link('View <i class="fa fa-eye" aria-hidden="true"></i>', ['action' => 'view', $note->id], ['escape' => false]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
