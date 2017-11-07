@@ -14,12 +14,12 @@ class UsersController extends AppController
 
     public function index()
     {
-
+        exit();
     }
 
-    public function view($id)
+    public function view()
     {
-        $user = $this->Users->get($id);
+        $user = $this->Users->get($this->Auth->user()['id']);
         $this->set(compact('user'));
     }
 
@@ -41,19 +41,17 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    public function edit($id)
+    public function edit()
     {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
+        $user = $this->Users->get($this->Auth->user()['id']);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Los cambios se han guardado.'));
+                $this->Flash->success('Data saved');
                 // CORREGIR RUTA DE REDIRECCIÓN //
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view']);
             } else {
-                $this->Flash->error(__('Los datos no se guardaron. Por favor, vuelve a intentarlo.'));
+                $this->Flash->error(__('Something was worng'));
             }
         }
         $this->set(compact('user'));
@@ -71,9 +69,7 @@ class UsersController extends AppController
 
       // The owner of an article can edit and delete it
       if (isset($user) && $user['id'] == $this->Auth->user()['id']) {
-          if ($user['id'] == (int)$this->request->getParam('pass.0')) {
-              return true;
-          }
+          return true;
       }else{
         return false;
       }

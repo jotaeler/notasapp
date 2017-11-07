@@ -18,7 +18,7 @@
         <legend>Add Note</legend>
         <?php
             echo $this->Form->input('title',['class'=> '', 'placeholder' => 'Type the tittle of the note','required']);
-            echo $this->Form->textarea('content', ['class'=> '', 'placeholder' => 'Some text...','required']);
+            echo $this->Form->textarea('content', ['class'=> '', 'placeholder' => 'Some text...','required', 'label'=>'Content']);
             //echo $this->Form->control('private', [options => ]);
             echo $this->Form->radio('private', [
                 ['value'=> '0' , 'text' => 'Public'],

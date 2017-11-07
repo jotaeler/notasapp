@@ -3,7 +3,7 @@
     <fieldset>
         <legend><?= __('Edit username') ?></legend>
         <?php
-            echo $this->Form->input('username');
+            echo $this->Form->input('username',['disabled']);
             echo $this->Form->input('name');
             echo $this->Form->input('password');
         ?>
