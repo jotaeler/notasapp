@@ -59,7 +59,7 @@ class UsersController extends AppController
     }
     */
 
-    public function changePassword($id){
+    public function changePassword(){
 
         $user = $this->Users->get($this->Auth->user('id'));
 
@@ -74,6 +74,7 @@ class UsersController extends AppController
 
                 ],
                 ['validate' =>'password']
+                
             );
 
             if ($this->Users->save($user)){
