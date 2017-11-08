@@ -13,7 +13,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'AppNotes';
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,9 +54,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </ul>
             <ul class="right">
                 <?php if (isset($current_user)) {?>
-                    <li><p>Hi <?=$current_user['username']?></p></li>
+                    <li><p>Hi, <?=$current_user['name']?></p></li>
                 <?php } ?>
                 <?php if (isset($current_user)) {?>
+                    <li><a href="/notas/users/edit" class="button">User configuration</a></li>
                     <li><a href="/notas/users/logout" class="button">Logout</a></li>
                 <?php } ?>
                 <?php if (!isset($current_user)) {?>

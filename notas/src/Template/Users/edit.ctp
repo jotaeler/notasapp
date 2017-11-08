@@ -14,6 +14,6 @@
             echo $this->Form->input('password2',['type'=>'password' ,'label'=>'Repeat Password']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Save changes')) ?>
     <?= $this->Form->end() ?>
 </div>

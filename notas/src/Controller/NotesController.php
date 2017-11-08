@@ -45,6 +45,7 @@ class NotesController extends AppController
 
 		if($this->request->is('post')){
 			$note = $this->Notes->patchEntity($note, $this->request->data);
+			$note['user_id'] = $this->Auth->user()['id'];
 
 			if($this->Notes->save($note)){
 				$this->Flash->success('Note added');

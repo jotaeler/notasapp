@@ -14,12 +14,12 @@ class UsersController extends AppController
 
     public function index()
     {
-
+        exit();
     }
 
-    public function view($id)
+    public function view()
     {
-        $user = $this->Users->get($id);
+        $user = $this->Users->get($this->Auth->user()['id']);
         $this->set(compact('user'));
     }
 
@@ -31,7 +31,7 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }else{
-                $this->Flash->error('Datos incorrectos', ['key' => 'auth']);
+                $this->Flash->error('Incorrect username or password', ['key' => 'auth']);
             }
         }
     }
@@ -44,17 +44,14 @@ class UsersController extends AppController
     /*
     public function edit($id)
     {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
+        $user = $this->Users->get($this->Auth->user()['id']);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Los cambios se han guardado.'));
-                // CORREGIR RUTA DE REDIRECCIÓN //
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success('Data saved');
+                return $this->redirect(['controller' => 'Notes', 'action' => 'index']);
             } else {
-                $this->Flash->error(__('Los datos no se guardaron. Por favor, vuelve a intentarlo.'));
+                $this->Flash->error(__('Error while saving the data'));
             }
         }
         $this->set(compact('user'));
@@ -98,17 +95,13 @@ class UsersController extends AppController
      * @param  [type]  $user [description]
      * @return boolean       [description]
      */
-    public function isAuthorized($user){
-
+     public function isAuthorized($user){
       // The owner of an article can edit and delete it
       if (isset($user) && $user['id'] == $this->Auth->user()['id']) {
-          if ($user['id'] == (int)$this->request->getParam('pass.0')) {
-              return true;
-          }
+          return true;
       }else{
         return false;
       }
-
     }
 
 }
