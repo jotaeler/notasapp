@@ -41,6 +41,7 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
+    /*
     public function edit($id)
     {
         $user = $this->Users->get($id, [
@@ -58,6 +59,36 @@ class UsersController extends AppController
         }
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
+    }
+    */
+
+    public function changePassword($id){
+
+        $user = $this->Users->get($this->Auth->user('id'));
+
+        if (!empty($this->request->data)){
+
+            $user = $this->Users->patchEntity($user,[
+
+                'oldPassword' => $this->request->data['oldPassword'],
+                'password'    => $this->request->data['password1'],
+                'password1'   => $this->request->data['password1'],
+                'password2'   => $this->request->data['password2']
+
+                ],
+                ['validate' =>'password']
+            );
+
+            if ($this->Users->save($user)){
+                $this->Flash->success('Contraseña cambiada correctamente');
+                $this->redirect('/');
+            }else{
+                $this->Flash->error('Se ha producido un error durante el guardado');
+            }
+        }
+
+        $this->set('user',$user);
+
     }
 
     /**

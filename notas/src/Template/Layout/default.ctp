@@ -47,6 +47,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <?php if (isset($current_user)){?>
                     <li><a href="/notas/notes/owned">My Notes</a></li>
                     <li><a href="/notas/notes/add">New Note</a></li>
+                    <!--
+                    <li><a href="/notas/users/changePassword">ChangePassword</a></li>
+                    -->
                 <?php } ?>
             </ul>
             <ul class="right">

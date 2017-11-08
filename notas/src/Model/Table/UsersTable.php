@@ -30,10 +30,12 @@ class UsersTable extends Table
         if (isset($data['username'])) {
             $data['username'] = mb_strtolower($data['username']);
         }
+        /*
         if (isset($data['password'])) {
             $hasher = new DefaultPasswordHasher();
             $data['password'] = $hasher->hash($data['password']);
         }
+        */
         if (isset($data['name'])) {
             $data['name'] = mb_strtolower($data['name']);
         }
@@ -92,6 +94,50 @@ class UsersTable extends Table
         return $validator;
     }
 
+
+/*
+    Esta función es el validador que va a establecer las reglas a la hora
+    de cambiar la contraseña de un usuario
+*/
+    public function validationPassword(Validator $validator){
+
+        $validator
+            ->add('oldPassword','custom',[
+                'rule'=>  function($value, $context){
+                    $user = $this->get($context['data']['id']);
+                    if ($user) {
+                        if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                'message'=>'The old password does not match the current password!'
+            ])
+            ->notEmpty('old_password', 'Rellena este campo');
+
+        $validator
+            ->add('password1',[
+                'match'=>[
+                    'rule'=> ['compareWith','password2'],
+                    'message'=>'The passwords does not match!',
+                ]
+            ])
+            ->notEmpty('password1');
+
+        $validator
+            ->add('password2',[
+                'match'=>[
+                    'rule'=> ['compareWith','password1'],
+                    'message'=>'The passwords does not match!',
+                ]
+            ])
+            ->notEmpty('password2');
+
+        return $validator;
+
+    }
+
     /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
@@ -105,4 +151,11 @@ class UsersTable extends Table
 
         return $rules;
     }
+
+    public function recoverPassword($id_user){
+
+        $user = $this->get($id);
+        return $user->password();
+    }
+
 }
