@@ -37,4 +37,12 @@ class Note extends Entity
         'user_id' => true,
         'user' => true
     ];
+
+    protected function _setContents($value) {
+        return strip_tags($value);
+    }
+
+    protected function _setTitle($value) {
+        return strip_tags($value);
+    }
 }
