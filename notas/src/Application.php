@@ -47,10 +47,10 @@ class Application extends BaseApplication
             ->add(AssetMiddleware::class)
 
             // Add routing middleware.
-            ->add(new RoutingMiddleware($this))
+            ->add(new RoutingMiddleware($this));
 
             //Add Custom headers
-            ->add(new HeadersMiddleware());
+            //->add(new HeadersMiddleware());
 
             $headers = new SecurityHeadersMiddleware();
             $headers
