@@ -341,7 +341,9 @@ return [
      *
      * To use database sessions, load the SQL file located at config/schema/sessions.sql
      */
-    'Session' => [
-        'defaults' => 'php',
-    ],
+     'Session' => [
+         'defaults' => 'cake',
+         'timeout' => 1440,
+         'cookie' => 'notes_cookie'
+     ],
 ];
