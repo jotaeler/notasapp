@@ -74,14 +74,14 @@ class UsersController extends AppController
 
                 ],
                 ['validate' =>'password']
-                
+
             );
 
             if ($this->Users->save($user)){
-                $this->Flash->success('Contraseña cambiada correctamente');
+                $this->Flash->success('Password correctly changed.');
                 $this->redirect('/');
             }else{
-                $this->Flash->error('Se ha producido un error durante el guardado');
+                $this->Flash->error('Error while saving.');
             }
         }
 

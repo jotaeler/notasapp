@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use Cake\Network\Exception\NotFoundException;
+
 class NotesController extends AppController
 {
 
@@ -35,9 +37,13 @@ class NotesController extends AppController
   	}
 
 	public function view($id){
-		$user = $this->Auth->user();
-		$note = $this->Notes->find()->contain(['Users'])->where(['Notes.id' => $id])->first();
-		$this->set(compact('note'));
+		if (!isset($id)) {
+			throw new NotFoundException(__('Note not found'));
+		} else {
+			$user = $this->Auth->user();
+			$note = $this->Notes->find()->contain(['Users'])->where(['Notes.id' => $id])->first();
+			$this->set(compact('note'));
+		}
 	}
 
 	public function add(){
@@ -58,14 +64,18 @@ class NotesController extends AppController
 	}
 
 	public function del($id){
-		$this->request->allowMethod(['post']);
-		$note = $this->Notes->get($id);
-		if($this->Notes->delete($note)){
-			$this->Flash->success('Note deleted');
-		}else{
-			$this->Flash->error('Something was wrong');
+		if (!isset($id)) {
+			throw new NotFoundException(__('Note not found'));
+		} else {
+			$this->request->allowMethod(['post']);
+			$note = $this->Notes->get($id);
+			if($this->Notes->delete($note)){
+				$this->Flash->success('Note deleted');
+			}else{
+				$this->Flash->error('Something was wrong');
+			}
+			return $this->redirect(['controller'=>'Notes','action'=>'owned']);
 		}
-		return $this->redirect(['controller'=>'Notes','action'=>'owned']);
 	}
 
 	/**
@@ -74,7 +84,7 @@ class NotesController extends AppController
 	 * @param  [type]  $note_id
 	 * @return boolean
 	 */
-	public function isOwnedBy($user_id, $note_id){
+	private function isOwnedBy($user_id, $note_id){
 		$note = $this->Notes->find()->where(['id' => $note_id])->first();
 		if($note['user_id'] == $user_id){
 			return true;
@@ -88,7 +98,7 @@ class NotesController extends AppController
 	 * @param  [type]  $id
 	 * @return boolean
 	 */
-	public function isPublic($id){
+	private function isPublic($id){
 		$note = $this->Notes->find()->where(['id' => $id])->first();
 		if(!$note['private']){
 			return true;
