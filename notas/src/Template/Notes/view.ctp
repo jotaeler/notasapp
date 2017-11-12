@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <th scope="row">User</th>
-            <td><?= $note->user->username ?></td>
+            <td><?= h($note->user->username) ?></td>
         </tr>
         <tr>
             <th scope="row">Created</th>
