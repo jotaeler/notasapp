@@ -2,13 +2,14 @@
 namespace App\Controller;
 
 use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Exception\UnauthorizedException;
 
 class NotesController extends AppController
 {
 
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
-		 $this->Auth->allow(['index']);
+		 $this->Auth->allow(['index','view']);
 		 //$this->Auth->allow(['logout']);
 		 $this->set('current_user', $this->Auth->user());
 	}
@@ -37,11 +38,13 @@ class NotesController extends AppController
   	}
 
 	public function view($id){
+		$user = $this->Auth->user();
+		$note = $this->Notes->find()->contain(['Users'])->where(['Notes.id' => $id])->first();
 		if (!isset($id)) {
 			throw new NotFoundException(__('Note not found'));
-		} else {
-			$user = $this->Auth->user();
-			$note = $this->Notes->find()->contain(['Users'])->where(['Notes.id' => $id])->first();
+		} else if(!$this->isPublic($id) && ($user['id'] != $note['user_id'])) {
+			throw new UnauthorizedException(__('You don´t have permmisions'));
+		} else{
 			$this->set(compact('note'));
 		}
 	}
@@ -118,11 +121,15 @@ class NotesController extends AppController
     public function isAuthorized($user){
 		$action = $this->request->getParam('action');
 	    // The add and tags actions are always allowed to logged in users.
+	    //Fragmento de código de posible uso en el futuro
+	    /*
 	    if (in_array($action, ['view'])) {
 			if($this->isPublic($this->request->getParam('pass.0'))){
 				return true;
 			}
 	    }
+	    */
+	    
 
       	// The owner of an note can edit and delete it
 		if (isset($user) && $user['id'] == $this->Auth->user()['id']) {
