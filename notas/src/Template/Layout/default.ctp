@@ -36,12 +36,15 @@ $cakeDescription = 'AppNotes';
 </head>
 <body>
     <nav class="top-bar expanded" data-topbar role="navigation">
+        
         <ul class="title-area large-3 medium-4 columns">
             <li class="name">
                 <!--h1><a href=""><?= $this->fetch('title') ?></a></h1-->
+                <img src="/notas/webroot/img/notesapp_icon.png" alt="CakePHP" style="float:left;" />        
                 <h1><a href="/notas">Notes App</a></h1>
-            </li>
+            </li>   
         </ul>
+
         <div class="top-bar-section">
             <ul>
                 <?php if (isset($current_user)){?>
